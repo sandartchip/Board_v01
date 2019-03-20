@@ -73,6 +73,10 @@
 				String regDate = rs.getString(i++);
 				String modDate = rs.getString(i++);
 				%>
+				
+			<div>
+				<
+			</div>
 			<table border="1px">
 				<tr>
 					<td>제목</td>
@@ -81,13 +85,13 @@
 				
 				<tr>
 					<td>내용</td>
-					<td width="300" height="500px"> <%=content %> </td>
+					<td width="300"> <%=content %> </td>
 				</tr>
-				<!-- <tr>				
+				<tr>				
 					<td width="100"> <%=regDate.toString() %> </td>
 					
 					<td width="100"> <%=modDate.toString() %> </td>				
-				</tr>-->
+				</tr>
 			</table>
 			
 			<button type="button" value="삭제" onclick="javascript:moveTodeletePage(<%=content_id%>);">

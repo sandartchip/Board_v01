@@ -61,7 +61,7 @@
 		pstmt.setString(1, title);
 		pstmt.setString(2, content);
 		pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis() ));
-		pstmt.setInt(4, content_id); //현재 게시물의 ID
+		pstmt.setInt(4, content_id); //아직 안확실
 		// DB에 저장 
 		pstmt.executeUpdate();
 		

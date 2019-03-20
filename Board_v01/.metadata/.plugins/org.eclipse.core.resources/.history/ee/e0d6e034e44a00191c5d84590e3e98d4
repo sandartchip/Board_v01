@@ -26,7 +26,7 @@
 				
 		<input type="submit" value = "저장"/>	
 	</form>
-	<a href="list.jsp"> 취소 </a> <!-- 상세보기로 이동 -->
+	<a href="view.jsp"> 취소 </a> <!-- 상세보기로 이동 -->
 
 	<script>
 		function formCheck(){

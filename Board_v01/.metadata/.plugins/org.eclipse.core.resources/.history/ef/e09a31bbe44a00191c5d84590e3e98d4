@@ -105,10 +105,10 @@ contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %>
 		<input type="hidden" name="content_id" value="<%=content_id %>">
 		<input type="submit" value = "저장"/>
 		
-		 <!--   modifySave로 content_id를 넘긴다. -->
+		 //modifySave로 content_id를 넘긴다.
 		 
 	</form>
-	<a href="list.jsp"> 취소 </a> <!-- 상세보기로 이동 -->
+	<a href="view.jsp"> 취소 </a> <!-- 상세보기로 이동 -->
 
 	<script>
 		function formCheck(){

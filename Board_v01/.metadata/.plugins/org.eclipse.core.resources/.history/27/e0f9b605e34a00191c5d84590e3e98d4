@@ -81,7 +81,7 @@
 				
 				<tr>
 					<td>내용</td>
-					<td width="300" height="500px"> <%=content %> </td>
+					<td width="300"> <%=content %> </td>
 				</tr>
 				<!-- <tr>				
 					<td width="100"> <%=regDate.toString() %> </td>

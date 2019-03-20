@@ -101,14 +101,14 @@ contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %>
 		
 		내용 : <input type="text" name="content" style="height:100px"  value="<%=content %>">		
 		<!-- 내용 표시-->
-		게시물 번호 : 
+		 
 		<input type="hidden" name="content_id" value="<%=content_id %>">
 		<input type="submit" value = "저장"/>
 		
-		 //modifySave로 content_id를 넘긴다.
+		 <!--   modifySave로 content_id를 넘긴다. -->
 		 
 	</form>
-	<a href="view.jsp"> 취소 </a> <!-- 상세보기로 이동 -->
+	<a href="list.jsp"> 취소 </a> <!-- 상세보기로 이동 -->
 
 	<script>
 		function formCheck(){
