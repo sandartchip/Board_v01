@@ -6,12 +6,15 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="driverName" key="selection"/>
+		<item value="수정 " key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="수정 "/>
+			<item value="수정"/>
+			<item value="redirect"/>
 			<item value="driverName"/>
 		</list>
 		<list key="replacehistory">
