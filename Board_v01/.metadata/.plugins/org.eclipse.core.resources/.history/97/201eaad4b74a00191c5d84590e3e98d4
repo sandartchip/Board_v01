@@ -1,0 +1,48 @@
+<%@ page language= "java" contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %> 
+
+<!DOCTYPE html>
+<html> 
+<head>
+		<meta charset="UTF-8">
+		<title>글 작성 페이지</title>
+</head>
+
+<body>
+<!--  서버단에서 출력 -->
+	<form action="writeSave.jsp" method="post"
+	onsubmit="return formCheck();">
+		<!--  데이터들을 가진 form을 action에 지정된 페이지로 보냄 -->
+		<!--  post는 많은 값 보낼 때. -->
+		
+		제목 : <input type="text" name="title">
+		내용 : <input type="text" name="content" style="height:100px">
+				
+		<input type="submit" value = "저장"/>	
+	</form>
+	<a href="view.jsp"> 취소 </a> <!-- 상세보기로 이동 -->
+
+	<script>
+		function formCheck(){
+ 
+			//첫번째 form의 제목의 값  
+			var title = document.forms[0].title.value;
+			var body = document.forms[0].body.value;
+			var length = document.forms[0].length -1;
+			
+			if( title.length >80) {
+				alert("제목의 길이가 너무 깁니다");
+				return false;
+			}
+			
+			for(var i=0;i<length;i++){
+				if(document.forms[0][i].value == null || document.forms[0][i].value==""){
+					alert(document.forms[0][i].name + "을 입력하세요.");
+					document.forms[0][i].focus();
+					return false;
+				}
+			}
+		} 
+	</script> 
+</body>
+</html>
+

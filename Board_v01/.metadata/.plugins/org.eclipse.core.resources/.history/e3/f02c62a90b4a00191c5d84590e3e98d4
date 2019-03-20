@@ -1,0 +1,95 @@
+<%@ page language= "java" contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %>
+<%@page import="java.sql.ResultSet" %>
+<%@page import="java.sql.Statement" %>
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.PreparedStatement" %>
+<%@page import="java.sql.DriverManager" %>
+<%@page import="java.sql.SQLException" %>
+<%@page import="java.sql.Timestamp" %> 
+ 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JSP 게시판</title>
+</head>
+<body>
+	<h1>게시판</h1>
+	<table>
+		<tr>
+			<th>제목</th>
+			<th>내용</th>
+			<th>저장날짜</th>
+			<th>수정날짜</th>
+		</tr>
+		<%
+			Connection conn = null;
+			PreparedStatement pstmt = null; 
+			//쿼리 결과를 저장한 메모리 영역을 참조할 객체
+			
+			int content_id = 1;
+			
+			try{
+				//1. JDBC 드라이버 로딩 	
+				String driverName = "com.mysql.cj.jdbc.Driver";
+				Class.forName(driverName);
+			
+				//2. DB 서버 접속
+				String dbUrl = "jdbc:mysql://localhost:3306/boardDB?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";
+				String dbUser = "root";
+				String dbPassword = "ROOT";
+				ResultSet rs;
+				
+				//접속 URL정보와 포트 번호, SID		
+				conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+				//위에서 만든 클래스를 import하여 Connection 객체를 생성한다.
+				
+				String read_sql = "select * from board_table where id = ?";
+				pstmt = conn.prepareStatement(read_sql);
+				// prepareStatement에서 해당 sql을 미리 컴파일.
+				
+				pstmt.setString(1, "test");
+				
+				rs = pstmt.executeQuery(); // 쿼리 실행 후 결과를 ResultSet 객체에 담음
+						
+				while(rs.next()){ //결과를 한 행씩 돌아가면서 가져온다.
+		
+					String title = rs.getString("title");
+					String content = rs.getString("content");
+					Timestamp regDate = rs.getTimestamp("regDate");
+					Timestamp modDate = rs.getTimestamp("modDate");
+					content_id = rs.getInt("content_id");
+				%>
+				<tr>		
+					<td width="100"> <%=title %></td>
+					<td width="100"> <%=content %></td>
+					<td width="100"> <%=regDate.toString() %> </td>
+					<td  width="100"> <%=modDate.toString() %> </td>
+				</tr>
+			<%
+
+				}//end of while 
+				}catch(ClassNotFoundException ec){
+					ec.printStackTrace();
+				}
+				catch( SQLException e){
+					e.printStackTrace();
+				} finally {
+					if( rs != null) try { 
+						rs.close();
+						} catch(SQLException sqle){							
+						}
+					if(pstmt != null) try {
+						pstmt.close();
+					} catch(SQLException sqle){						
+					}
+					if(conn != null) try {
+						conn.close(); } catch(SQLException sqle){
+						}
+				}			
+			%>
+	</table>
+	<a href="write.jsp"></a>
+	<button >삭제</button>
+</body>
+</html>

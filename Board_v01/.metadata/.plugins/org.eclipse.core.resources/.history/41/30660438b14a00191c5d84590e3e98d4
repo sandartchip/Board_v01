@@ -1,0 +1,82 @@
+<%@page language= "java" contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %>
+<%@page import="java.sql.ResultSet" %>
+<%@page import="java.sql.Statement" %>
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.PreparedStatement" %>
+<%@page import="java.sql.DriverManager" %>
+<%@page import="java.sql.SQLException" %>
+<%@page import="java.sql.Timestamp" %> 
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Insert title here</title>
+</head>
+<body>
+	DELETE 페이지로 넘어  왔긔~~~!
+	
+	//view 페이지에서 받아온 id PK 확인
+	//DB 커넥션 후
+	//Delete SQL문 수행
+		<%
+			String content_idx = request.getParameter("content_id");
+			System.out.println("content idx" + content_idx);		
+			//view에서 받아 옴.
+		%>
+	
+		<%
+		//데이터 받아오기
+		 
+		Connection conn = null;
+		PreparedStatement pstmt = null; 
+		//쿼리 결과를 저장한 메모리 영역을 참조할 객체
+	 
+		
+		try{
+			//1. JDBC 드라이버 로딩 	
+			String driverName = "com.mysql.cj.jdbc.Driver";
+			Class.forName(driverName);
+		
+			//2. DB 서버 접속
+			String dbUrl = "jdbc:mysql://localhost:3306/boardDB?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";
+			String dbUser = "root";
+			String dbPassword = "ROOT";
+			
+			//접속 URL정보와 포트 번호, SID		
+			conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+			//위에서 만든 클래스를 import하여 Connection 객체를 생성한다.
+			
+			
+			String delete_sql =
+				"DELETE FROM board_table WHERE content_id= " + content_idx;
+			
+			System.out.println("SQL 문" + delete_sql);
+						
+			pstmt = conn.prepareStatement(delete_sql);
+			
+			pstmt.executeUpdate();
+			// DB에  
+			
+			if(pstmt != null){
+				try {
+					pstmt.close();
+				} catch(SQLException e){					
+				}
+			}
+			if(conn != null){
+				try {
+					conn.close();
+				} catch(SQLException e){					
+				}
+			}
+		} catch(ClassNotFoundException ec){
+			ec.printStackTrace();
+		}
+		catch( SQLException e){
+			e.printStackTrace();
+		}
+		
+		response.sendRedirect("list.jsp");	
+	%>
+</body>
+</html>

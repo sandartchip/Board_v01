@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"  pageEncoding="EUC-KR"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>게 시 판 입 니 다</title>
+</head>
+<body>
+	<h1>게시글 리스트</h1>
+	<table>
+		<tr>
+			<th>제목</th>
+			<th>등록 일시</th>
+			<th>수정 일시</th>
+		</tr>
+		<tr>
+			<td>제목입니다<</td>
+			<td>2018.03.01</td>
+			<td>2018.03.02</td>
+		</tr>
+	</table>
+	<a href="write.html">글쓰기</a>
+</body>
+</html>

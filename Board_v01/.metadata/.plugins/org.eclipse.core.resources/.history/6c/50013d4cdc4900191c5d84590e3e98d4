@@ -1,0 +1,102 @@
+<%@page import="com.mysql.cj.jdbc.Driver"%>
+<%@page import="java.sql.ResultSet" %>
+<%@page import="java.sql.Statement" %>
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.PreparedStatement" %>
+<%@page import="java.sql.DriverManager" %>
+<%@page import="java.sql.SQLException" %>
+
+<%@ page language= "java" contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %> 
+
+<!DOCTYPE html>
+<html> 
+<head>
+		<meta charset="UTF-8">
+		<title>글 작성 페이지</title>
+		
+</head>
+
+<body> 
+	<%
+	
+		//1. JDBC 드라이버 로딩 
+		String driverName = "com.mysql.cj.jdbc.Driver";
+		
+		//2. DB 서버 접속
+		String dbUrl = "jdbc:mysql://localhost:3306/boardDB";
+		String dbUser = "root";
+		String dbPassword = "ROOT";
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int content_id = 1;
+		
+		//접속 URL정보와 포트 번호, SID
+
+		Class.forName(driverName);
+		conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+		String sql = "SELECT title FROM boardDB WHERE content_id = ?";
+		ps = conn.prepareStatement(sql);
+		
+		ps.setInt(1, content_id);
+		rs = ps.executeQuery();
+		
+		//3. Statement or PreparedStatement 객체 생성
+		Statement stmt = conn.createStatement();
+		
+		//4. SQL 실행
+		//5. 자원 해제
+	%>
+	
+	<%
+		String title = request.getParameter("title");
+		String regDate = request.getParameter("regDate");
+		String modDate = request.getParameter("modDate");
+		String content = request.getParameter("content");
+	%>
+	
+<!--  서버단에서 출력 -->
+	<form action="insert.jsp" method="post" onsubmit="return formCheck();">
+	<!--  데이터들을 가진 form을 action에 지정된 페이지로 보냄 -->
+	<!--  post는 많은 값 보낼 때. -->
+	
+	제목 : <input type="text" name="title">
+	내용 : <input type="text" name="content" style="height:100px">
+	날짜 : <input type="text" name="regDate">
+	날짜 : <input type="text" name="modDate">
+	
+	<input type="submit" value = "저장"/>	
+	
+	<a href="modify.jsp">수정 페이지</a>
+	<a href="view.jsp"> 취소 </a> <!-- 상세보기로 이동 -->
+	
+	</form>
+
+	<script>
+		function formCheck(){
+ 
+			//첫번째 form의 제목의 값  
+			var title = document.forms[0].title.value;
+			var body = document.forms[0].body.value;
+			var length = document.forms[0].length -1;
+			
+			if( title.length >80) {
+				alert("제목의 길이가 너무 깁니다");
+				return false;
+			}
+			
+			for(var i=0;i<length;i++){
+				if(document.forms[0][i].value == null || document.forms[0][i].value==""){
+					alert(document.forms[0][i].name + "을 입력하세요.");
+					document.forms[0][i].focus();
+					return false;
+				}
+			}
+			 
+		}
+		
+	</script>
+	
+</body>
+</html>
+

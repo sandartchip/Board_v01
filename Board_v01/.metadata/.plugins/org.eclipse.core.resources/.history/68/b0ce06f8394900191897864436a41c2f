@@ -1,0 +1,24 @@
+ 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>寃� �� �� �� �� ��</title>
+</head>
+<body>
+	<h1>寃���湲� 由ъ�ㅽ��</h1>
+	<table>
+		<tr>
+			<th>��紐�</th>
+			<th>�깅� �쇱��</th>
+			<th>���� �쇱��</th>
+		</tr>
+		<tr>
+			<td>��紐⑹������<</td>
+			<td>2018.03.01</td>
+			<td>2018.03.02</td>
+		</tr>
+	</table>
+	<a href="write.html">湲��곌린</a>
+</body>
+</html>

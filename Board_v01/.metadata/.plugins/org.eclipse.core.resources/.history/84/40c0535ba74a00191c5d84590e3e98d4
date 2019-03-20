@@ -1,0 +1,105 @@
+<%@page import="java.sql.ResultSet" %>
+<%@page import="java.sql.Statement" %>
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.PreparedStatement" %>
+<%@page import="java.sql.DriverManager" %>
+<%@page import="java.sql.SQLException" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>상세 보기 페이지</title>
+</head>
+<body>
+	
+	<a href="modify.jsp">수정 페이지로 이동</a>
+	
+	<!-- 수정 페이지 이동 -->
+	
+	<%
+		//list.jsp에서 넘어온 값
+		String content_idx_from_view = request.getParameter("content_idx");
+		
+	 	System.out.println("게시물 idx = "+ content_idx_from_view);
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		//쿼리 결과를 저장한 메모리 영역을 참조할 객체
+
+		int content_id;
+		content_id = Integer.parseInt(content_idx_from_view);
+		
+		try{
+			//1. JDBC 드라이버 로딩 	
+			String driverName = "com.mysql.cj.jdbc.Driver";
+			Class.forName(driverName);
+		
+			//2. DB 서버 접속
+			String dbUrl = "jdbc:mysql://localhost:3306/boardDB?serverTimezone=UTC";
+			String dbUser = "root";
+			String dbPassword = "ROOT";
+					
+			//접속 URL정보와 포트 번호, SID		
+			conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+			//위에서 만든 클래스를 import하여 Connection 객체를 생성한다.
+			 
+			stmt = conn.createStatement();
+			//데이터 추가, 수정, 삭제를 실행할 객체를 생성 
+			// 글번호(content_idx) 파라미터를 list.jsp에서 받아 옴 
+
+			String sql = "SELECT * FROM board_table WHERE content_id = " + content_id;
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()){ //해당 게시물 가져 오기
+				int i=1;	
+				String title = rs.getString(i++);
+				String content = rs.getString(i++);
+				String regDate = rs.getString(i++);
+				String modDate = rs.getString(i++);
+				%>
+				
+			<table>
+				<tr>
+					<th>제목</th>
+					<th>내용</th>
+					<th>저장날짜</th>
+					<th>수정날짜</th>
+				</tr>
+				<tr>
+					<td width="100"> <%=title %> </td>
+					<td width="100"> <%=content %> </td>
+					<td width="100"> <%=regDate.toString() %> </td>
+					<td width="100"> <%=modDate.toString() %> </td>				
+				</tr>
+			</table>
+			
+			<%
+			}
+			if( rs!= null){
+				try {
+					rs.close();
+				} catch(SQLException e){					
+				}
+			}
+			if(stmt != null){
+				try {
+					stmt.close();
+				} catch(SQLException e){					
+				}
+			}
+			if(conn != null){
+				try {
+					conn.close();
+				} catch(SQLException e){					
+				}
+			}
+		} catch(ClassNotFoundException ec){
+			ec.printStackTrace();
+		}
+		catch( SQLException e){
+			e.printStackTrace();
+		}
+	%> 
+</body>
+</html>

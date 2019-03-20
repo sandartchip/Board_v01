@@ -1,0 +1,79 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="java.sql.ResultSet" %>
+<%@page import="java.sql.Statement" %>
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.PreparedStatement" %>
+<%@page import="java.sql.DriverManager" %>
+<%@page import="java.sql.SQLException" %>
+<%@page import="java.sql.Timestamp" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<%
+	int content_id;
+	content_id = Integer.parseInt(content_idx_from_view);
+	System.out.println("클릭한 컨텐츠 번호 = " + content_id);
+	
+	try{
+		//1. JDBC 드라이버 로딩 	
+		String driverName = "com.mysql.cj.jdbc.Driver";
+		Class.forName(driverName);
+	
+		//2. DB 서버 접속
+		String dbUrl = "jdbc:mysql://localhost:3306/boardDB?serverTimezone=UTC";
+		String dbUser = "root";
+		String dbPassword = "ROOT";
+				
+		//접속 URL정보와 포트 번호, SID		
+		conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+		//위에서 만든 클래스를 import하여 Connection 객체를 생성한다.
+		 
+		stmt = conn.createStatement();
+		//데이터 추가, 수정, 삭제를 실행할 객체를 생성 
+		// 글번호(content_idx) 파라미터를 list.jsp에서 받아 옴 
+
+		String sql = "SELECT * FROM board_table WHERE content_id = " + content_id;
+		rs = stmt.executeQuery(sql);
+		
+		while(rs.next()){ //해당 게시물 가져 오기
+			int i=1;	
+			String title = rs.getString(i++);
+			String content = rs.getString(i++);
+			String regDate = rs.getString(i++);
+			String modDate = rs.getString(i++);
+			
+		}
+		if( rs!= null){
+			try {
+				rs.close();
+			} catch(SQLException e){					
+			}
+		}
+		if(stmt != null){
+			try {
+				stmt.close();
+			} catch(SQLException e){					
+			}
+		}
+		if(conn != null){
+			try {
+				conn.close();
+			} catch(SQLException e){					
+			}
+		}
+	} catch(ClassNotFoundException ec){
+		ec.printStackTrace();
+	}
+	catch( SQLException e){ 
+		e.printStackTrace();
+	}
+	response.sendRedirect("list.jsp");
+	%>
+</body>
+</html>
