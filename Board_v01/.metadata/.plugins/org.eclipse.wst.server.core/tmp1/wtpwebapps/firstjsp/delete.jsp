@@ -13,12 +13,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
+<body> 
 	
-	
-	//view 페이지에서 받아온 id PK 확인
-	//DB 커넥션 후
-	//Delete SQL문 수행
+		//view 페이지에서 받아온 id PK 확인
+		//DB 커넥션 후
+		//Delete SQL문 수행
 		<%
 			String content_idx = request.getParameter("content_id");
 			System.out.println("삭제 페이지로 진입~~ 삭제할 게시물 : " + content_idx);		

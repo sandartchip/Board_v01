@@ -24,12 +24,11 @@ contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %>
 	
 	String content_id =  request.getParameter("content_id");
 	System.out.println(content_id+"번째 게시물을 수정합니다");
+	String title="", content="", regDate, modDate;
 
 	Connection conn = null;
 	Statement stmt = null;
 	ResultSet rs = null;
-	String title="", content="", regDate, modDate;
- 
 	//쿼리 결과를 저장한 메모리 영역을 참조할 객체
 	
 	System.out.println("클릭한 컨텐츠 번호 = " + content_id);

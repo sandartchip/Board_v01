@@ -24,12 +24,10 @@ contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %>
 	
 	String content_id =  request.getParameter("content_id");
 	System.out.println(content_id+"번째 게시물을 수정합니다");
-
+	
 	Connection conn = null;
 	Statement stmt = null;
 	ResultSet rs = null;
-	String title="", content="", regDate, modDate;
- 
 	//쿼리 결과를 저장한 메모리 영역을 참조할 객체
 	
 	System.out.println("클릭한 컨텐츠 번호 = " + content_id);
@@ -57,13 +55,11 @@ contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %>
 		
 		while(rs.next()){ //해당 게시물 가져 오기
 			int i=1;	
-			title = rs.getString(i++);
-			content = rs.getString(i++);
-			regDate = rs.getString(i++);
-			modDate = rs.getString(i++);				
+			String title = rs.getString(i++);
+			String content = rs.getString(i++);
+			String regDate = rs.getString(i++);
+			String modDate = rs.getString(i++);				
 		}
-		System.out.println("--제목--"+title+" 내용--"+content+"----");
-		
 		if( rs!= null){
 			try {
 				rs.close();
@@ -96,10 +92,10 @@ contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %>
 		<!--  데이터들을 가진 form을 action에 지정된 페이지로 보냄 -->
 		<!--  post는 많은 값 보낼 때. -->
 		
-		제목 : <input type="text" name="title" value="<%=title %>">
+		제목 : <input type="text" name="title">
 		<!-- 제목 표시-->
 		
-		내용 : <input type="text" name="content" style="height:100px"  value="<%=content %>">		
+		내용 : <input type="text" name="content" style="height:100px">		
 		<!-- 내용 표시-->
 		게시물 번호 : 
 		<input type="hidden" name="content_id" value="<%=content_id %>">

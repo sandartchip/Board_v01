@@ -16,10 +16,78 @@ contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %>
 
 <%
 	//view.jsp에서 content id 값 받는다.
+	//DB 커넥션 해서 content_id 를 PK로  게시글 제목/내용 받아오는 부분.	
+	
+%>
+
+<%
 	
 	String content_id =  request.getParameter("content_id");
 	System.out.println(content_id+"번째 게시물을 수정합니다");
-	//DB 커넥션 해서 content_id 를 PK로  게시글 제목/내용 받아오는 부분.
+
+	Connection conn = null;
+	Statement stmt = null;
+	ResultSet rs = null;
+	String title="", content="", regDate, modDate;
+ 
+	//쿼리 결과를 저장한 메모리 영역을 참조할 객체
+	
+	System.out.println("클릭한 컨텐츠 번호 = " + content_id);
+	
+	try{
+		//1. JDBC 드라이버 로딩 	
+		String driverName = "com.mysql.cj.jdbc.Driver";
+		Class.forName(driverName);
+	
+		//2. DB 서버 접속
+		String dbUrl = "jdbc:mysql://localhost:3306/boardDB?serverTimezone=UTC";
+		String dbUser = "root";
+		String dbPassword = "ROOT";
+				
+		//접속 URL정보와 포트 번호, SID		
+		conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+		//위에서 만든 클래스를 import하여 Connection 객체를 생성한다.
+		 
+		stmt = conn.createStatement();
+		//데이터 추가, 수정, 삭제를 실행할 객체를 생성 
+		// 글번호(content_idx) 파라미터를 list.jsp에서 받아 옴 
+	
+		String sql = "SELECT * FROM board_table WHERE content_id = " + content_id;
+		rs = stmt.executeQuery(sql);
+		
+		while(rs.next()){ //해당 게시물 가져 오기
+			int i=1;	
+			title = rs.getString(i++);
+			content = rs.getString(i++);
+			regDate = rs.getString(i++);
+			modDate = rs.getString(i++);				
+		}
+		System.out.println("--제목--"+title+" 내용--"+content+"----");
+		
+		if( rs!= null){
+			try {
+				rs.close();
+			} catch(SQLException e){					
+			}
+		}
+		if(stmt != null){
+			try {
+				stmt.close();
+			} catch(SQLException e){					
+			}
+		}
+		if(conn != null){
+			try {
+				conn.close();
+			} catch(SQLException e){					
+			}
+		}
+	} catch(ClassNotFoundException ec){
+		ec.printStackTrace();
+	}
+	catch( SQLException e){ 
+		e.printStackTrace();
+	}
 %>
 
 <body>
@@ -28,10 +96,10 @@ contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %>
 		<!--  데이터들을 가진 form을 action에 지정된 페이지로 보냄 -->
 		<!--  post는 많은 값 보낼 때. -->
 		
-		제목 : <input type="text" name="title">
+		제목 : <input type="text" name="title" value="<%=title %>">
 		<!-- 제목 표시-->
 		
-		내용 : <input type="text" name="content" style="height:100px">		
+		내용 : <input type="text" name="content" style="height:100px"  value="<%=content %>">		
 		<!-- 내용 표시-->
 		게시물 번호 : 
 		<input type="hidden" name="content_id" value="<%=content_id %>">

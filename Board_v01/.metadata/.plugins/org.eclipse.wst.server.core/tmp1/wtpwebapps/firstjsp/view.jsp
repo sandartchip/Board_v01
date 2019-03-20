@@ -23,13 +23,7 @@
 	</script>
 	<script>
 		function moveToEditPage(content_id){
-			
-			console.log("ㅇㅇㅇㅇㅇㅇㅇ");
-			console.log("ㅇㅇㅇㅇㅇㅇㅇ");
-			console.log("ㅇㅇㅇㅇㅇㅇㅇ");
-			console.log("ㅇㅇㅇㅇㅇㅇㅇ");
-			console.log("ㅇㅇㅇㅇㅇㅇㅇ");
-			console.log("ㅇㅇㅇㅇㅇㅇㅇ");
+			 
 			console.log("view.jsp - " + content_id+ "의 수정 페이지로 이동");
 			location.href="modify.jsp?content_id="+content_id;
 		}
