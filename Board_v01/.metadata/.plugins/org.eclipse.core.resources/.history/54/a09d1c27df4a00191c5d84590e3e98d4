@@ -59,6 +59,12 @@
 				} catch(SQLException e){					
 				}
 			}
+			if(conn != null){
+				try {
+					conn.close();
+				} catch(SQLException e){					
+				}
+			}
 		} catch(ClassNotFoundException ec){
 			ec.printStackTrace();
 		}
@@ -72,27 +78,9 @@
 	<%
 
 	// -- DB INDEX 재조정 --
-	try{	
-		Statement stmt;
-		stmt = conn.createStatement();
-		
-		String rearrange_idx_sql = 
-				"ALTER TABLE board_table drop content_id;";
-				// IDX 재조정 위해 컬럼삭제
-		stmt.executeUpdate(rearrange_idx_sql);
-			
-		rearrange_idx_sql ="ALTER TABLE board_table ADD content_id int primary key auto_increment";
-		//FIRST 구문은 나중에
-		
-		stmt.executeUpdate(rearrange_idx_sql);
-	  	
-	  	stmt.close();
-	  	conn.close();
-	}	catch( SQLException e){
-		e.printStackTrace();
-	}
+	Statement stmt;
 
-  	
+	
 	%>
 </body>
 </html>

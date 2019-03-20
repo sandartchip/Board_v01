@@ -72,26 +72,21 @@
 	<%
 
 	// -- DB INDEX 재조정 --
-	try{	
-		Statement stmt;
-		stmt = conn.createStatement();
+	Statement stmt;
+	stmt = conn.createStatement();
+	
+	String rearrange_idx_sql = "ALTER TABLE content_id AUTO_INCREMENT=1;";
+	stmt.executeUpdate(rearrange_idx_sql);
 		
-		String rearrange_idx_sql = 
-				"ALTER TABLE board_table drop content_id;";
-				// IDX 재조정 위해 컬럼삭제
-		stmt.executeUpdate(rearrange_idx_sql);
-			
-		rearrange_idx_sql ="ALTER TABLE board_table ADD content_id int primary key auto_increment";
-		//FIRST 구문은 나중에
-		
-		stmt.executeUpdate(rearrange_idx_sql);
-	  	
-	  	stmt.close();
-	  	conn.close();
-	}	catch( SQLException e){
-		e.printStackTrace();
-	}
-
+	rearrange_idx_sql ="SET @COUNT =0";
+	stmt.executeUpdate(rearrange_idx_sql);
+	
+	rearrange_idx_sql	
+  	 ="UPDATE content_id [AUTO_INCREMENT content_id] = @COUNT:=@COUNT+1;";
+  	stmt.executeUpdate(rearrange_idx_sql);  	 
+	
+  	stmt.close();
+  	conn.close();
   	
 	%>
 </body>

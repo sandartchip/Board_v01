@@ -29,6 +29,7 @@
 		 
 		Connection conn = null;
 		PreparedStatement pstmt = null; 
+		
 		//쿼리 결과를 저장한 메모리 영역을 참조할 객체 
 		
 		try{
@@ -46,21 +47,15 @@
 			//위에서 만든 클래스를 import하여 Connection 객체를 생성한다.
 
 			pstmt = conn.prepareStatement("DELETE FROM board_table WHERE content_id=?");
+			//삭제 쿼리 실행
 			pstmt.setString(1, content_idx);
 			
 			int r = pstmt.executeUpdate();
 			System.out.println("변경된 row : "+ r);
-			// DB에  
 			
 			if(pstmt != null){
 				try {
 					pstmt.close();
-				} catch(SQLException e){					
-				}
-			}
-			if(conn != null){
-				try {
-					conn.close();
 				} catch(SQLException e){					
 				}
 			}
@@ -71,7 +66,33 @@
 			e.printStackTrace();
 		}
 		
-		response.sendRedirect("list.jsp");	
+		response.sendRedirect("list.jsp");
+		
+	%>
+	<%
+
+	// -- DB INDEX 재조정 --
+	try{	
+		Statement stmt;
+		stmt = conn.createStatement();
+		
+		String rearrange_idx_sql = 
+				"ALTER TABLE board_table drop content_id;";
+				// IDX 재조정 위해 컬럼삭제
+		stmt.executeUpdate(rearrange_idx_sql);
+			
+		rearrange_idx_sql ="ALTER TABLE board_table ADD content_id int primary key auto_increment";
+		//FIRST 구문은 나중에
+		
+		stmt.executeUpdate(rearrange_idx_sql);
+	  	
+	  	stmt.close();
+	  	conn.close();
+	}	catch( SQLException e){
+		e.printStackTrace();
+	}
+
+  	
 	%>
 </body>
 </html>
