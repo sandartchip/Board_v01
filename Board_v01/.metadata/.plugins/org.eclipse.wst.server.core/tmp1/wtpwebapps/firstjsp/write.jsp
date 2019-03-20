@@ -1,5 +1,12 @@
-<%@ page language= "java" 
-contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %> 
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="java.sql.ResultSet" %>
+<%@page import="java.sql.Statement" %>
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.PreparedStatement" %>
+<%@page import="java.sql.DriverManager" %>
+<%@page import="java.sql.SQLException" %>
+<%@page import="java.sql.Timestamp" %>
 
 <!DOCTYPE html>
 <html>
@@ -15,7 +22,7 @@ contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %>
 		<!--  post는 많은 값 보낼 때. -->
 		
 		제목 : <input type="text" name="title">
-		내용 : <input type="text" name="content" style="height:100px">
+		내용 : <input type="text" name="content" style="height:100px"> 
 				
 		<input type="submit" value = "저장"/>	
 	</form>

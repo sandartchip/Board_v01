@@ -20,15 +20,21 @@
 			console.log("삭제 페이지로 이동" + content_id);
 			location.href="delete.jsp?content_id="+content_id;
 		}
-		
+	</script>
+	<script>
 		function moveToEditPage(content_id){
-			console.log(content_id+ "의 수정 페이지로 이동");
-			location.href="modify.jsp?content_id=" + content_id;
+			
+			console.log("ㅇㅇㅇㅇㅇㅇㅇ");
+			console.log("ㅇㅇㅇㅇㅇㅇㅇ");
+			console.log("ㅇㅇㅇㅇㅇㅇㅇ");
+			console.log("ㅇㅇㅇㅇㅇㅇㅇ");
+			console.log("ㅇㅇㅇㅇㅇㅇㅇ");
+			console.log("ㅇㅇㅇㅇㅇㅇㅇ");
+			console.log("view.jsp - " + content_id+ "의 수정 페이지로 이동");
+			location.href="modify.jsp?content_id="+content_id;
 		}
 	</script>
-	
-	
-	
+	 
 	<!-- 수정 페이지 이동 -->
 	
 	<%
@@ -94,10 +100,9 @@
 			</button>
 			
 				
-			<a href="modify.jsp" onclick="javascript:moveToEditPage(<%=content_id%>);">
-				수정 페이지로 이동
-			</a>
-			
+			<button type="button" onclick="javascript:moveToEditPage(<%=content_id%>);">
+				게시물 수정하기
+			</button>
 				
 			<%
 			}

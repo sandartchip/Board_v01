@@ -15,9 +15,12 @@ contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %>
 </head>
 
 <%
+	//view.jsp에서 content id 값 받는다.
+	
+	String content_id =  request.getParameter("content_id");
+	System.out.println(content_id+"번째 게시물을 수정합니다");
 	//DB 커넥션 해서 content_id 를 PK로  게시글 제목/내용 받아오는 부분.
 %>
-
 
 <body>
 	<form action="modifySave.jsp" method="post"
@@ -30,8 +33,12 @@ contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %>
 		
 		내용 : <input type="text" name="content" style="height:100px">		
 		<!-- 내용 표시-->
+		게시물 번호 : 
+		<input type="hidden" name="content_id" value="<%=content_id %>">
+		<input type="submit" value = "저장"/>
 		
-		<input type="submit" value = "저장"/>	
+		 //modifySave로 content_id를 넘긴다.
+		 
 	</form>
 	<a href="view.jsp"> 취소 </a> <!-- 상세보기로 이동 -->
 

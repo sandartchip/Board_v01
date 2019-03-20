@@ -61,6 +61,8 @@
 		// DB에 저장 
 		pstmt.executeUpdate();
 		
+		//-------------------에러처리
+		
 		if(pstmt != null){
 			try {
 				pstmt.close();

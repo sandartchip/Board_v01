@@ -25,11 +25,15 @@
 	
 	String title = request.getParameter("title");
 	String content = request.getParameter("content");
+	String content_id_str = request.getParameter("content_id");
+	int content_id;
+	content_id = Integer.parseInt(content_id_str);
 
 	System.out.println("수정된 게시글 정보 : " + title + " "+content);
 	
 	Connection conn = null;
 	PreparedStatement pstmt = null;  
+	
 	
 	try{
 		//1. JDBC 드라이버 로딩 	
@@ -57,7 +61,7 @@
 		pstmt.setString(1, title);
 		pstmt.setString(2, content);
 		pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis() ));
-		pstmt.setInt(4, );
+		pstmt.setInt(4, content_id); //아직 안확실
 		// DB에 저장 
 		pstmt.executeUpdate();
 		

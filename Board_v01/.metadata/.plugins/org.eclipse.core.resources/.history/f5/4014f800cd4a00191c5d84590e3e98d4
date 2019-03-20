@@ -1,0 +1,103 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="java.sql.ResultSet" %>
+<%@page import="java.sql.Statement" %>
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.PreparedStatement" %>
+<%@page import="java.sql.DriverManager" %>
+<%@page import="java.sql.SQLException" %>
+<%@page import="java.sql.Timestamp" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<%
+	
+	/*  write.jsp에서 [해당 게시물의 제목/내용]를 받아온다. 
+	*/
+	request.setCharacterEncoding("UTF-8");
+	response.setContentType("text/html;charset=UTF-8");
+	
+	String title = request.getParameter("title");
+	String content = request.getParameter("content");
+	
+
+	System.out.println("게시글 정보 : " + title + " "+content);
+	
+	Connection conn = null;
+	PreparedStatement pstmt = null; 
+	//쿼리 결과를 저장한 메모리 영역을 참조할 객체 
+	
+	try{
+		//1. JDBC 드라이버 로딩 	
+		String driverName = "com.mysql.cj.jdbc.Driver";
+		Class.forName(driverName); 
+		
+		//2. DB 서버 접속
+		String dbUrl = "jdbc:mysql://localhost:3306/boardDB?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";
+		String dbUser = "root";
+		String dbPassword = "ROOT";
+		
+		//접속 URL정보와 포트 번호, SID		
+		conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+		//위에서 만든 클래스를 import하여 Connection 객체를 생성한다.
+		
+		String insert_sql = 
+		"INSERT INTO board_table (title, content, regDate, modDate) values(?,?,?,?)";
+		//sql 쿼리
+		
+		pstmt = conn.prepareStatement(insert_sql);
+		//prepare statement에서 해당 sql을 미리 컴파일.
+		
+		pstmt.setString(1, title);
+		pstmt.setString(2, content);
+		pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis() ));
+		pstmt.setTimestamp(4, new Timestamp(System.currentTimeMillis() ));
+		
+		// DB에 저장 
+		pstmt.executeUpdate();
+		
+		
+		//현재 게시물 content_id 추출 용 카운트 함수
+		
+		String get_count_sql;
+		get_count_sql = "SELECT COUNT(*) FROM board_table";
+		
+		Statement stmt = conn.createStatement();
+		ResultSet rs_count = stmt.executeQuery(get_count_sql);
+		System.out.println("현재 게시글 갯수(수정할 게시물 PK)= "+ get_count_sql);
+			
+		if(stmt != null){
+			try {
+				stmt.close();
+			} catch(SQLException e){
+			}
+		}
+		//-------------------에러처리
+		
+		if(pstmt != null){
+			try {
+				pstmt.close();
+			} catch(SQLException e){					
+			}
+		}
+		if(conn != null){
+			try {
+				conn.close();
+			} catch(SQLException e){					
+			}
+		}
+	} catch(ClassNotFoundException ec){
+		ec.printStackTrace();
+	}
+	catch( SQLException e){
+		e.printStackTrace();
+	}
+	response.sendRedirect("list.jsp");
+	%>
+</body>
+</html>
