@@ -7,6 +7,8 @@
 <%@page import="java.sql.DriverManager" %>
 <%@page import="java.sql.SQLException" %>
 <%@page import="java.sql.Timestamp" %>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.util.Date,java.io.*,java.util.Enumeration"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -53,10 +55,22 @@
 		pstmt = conn.prepareStatement(insert_sql);
 		//prepare statement에서 해당 sql을 미리 컴파일.
 		
+		//현재 시간 계산
+				
+		long time = System.currentTimeMillis();
+		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+		 
+		String str = dayTime.format(new Date(time));
+		System.out.println("현재 시간 = "+str);
+		
+		//Timestamp cur_time = Timestamp.valueOf(str);
+		Timestamp cur_time = new Timestamp(System.currentTimeMillis() );
+		//현재 시간 계산
+		
 		pstmt.setString(1, title);
 		pstmt.setString(2, content);
-		pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis() ));
-		pstmt.setTimestamp(4, new Timestamp(System.currentTimeMillis() ));
+		pstmt.setTimestamp(3, cur_time);
+		pstmt.setTimestamp(4, cur_time);
 		
 		// DB에 저장 
 		pstmt.executeUpdate();

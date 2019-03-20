@@ -7,6 +7,8 @@
 <%@page import="java.sql.DriverManager" %>
 <%@page import="java.sql.SQLException" %>
 <%@page import="java.sql.Timestamp" %>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.util.Date,java.io.*,java.util.Enumeration"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -58,9 +60,22 @@
 		pstmt = conn.prepareStatement(modify_sql);
 		//prepare statement에서 해당 sql을 미리 컴파일.
 		
+		 
+		//현재 시간 계산 용..
+		
+		
+		
+		//일단 시간 이상하게 들어가는거..
+		Timestamp cur_time = new Timestamp(System.currentTimeMillis()) ;
+		//이 줄 살려서.
+		
+		// 제대로 계산
+				
+		//
+		 
 		pstmt.setString(1, title);
 		pstmt.setString(2, content);
-		pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis() ));
+		pstmt.setTimestamp(3,  cur_time);
 		pstmt.setInt(4, content_id); //현재 게시물의 ID
 		// DB에 저장 
 		pstmt.executeUpdate();

@@ -17,11 +17,10 @@ contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %>
 <%
 	//view.jsp에서 content id 값 받는다.
 	//DB 커넥션 해서 content_id 를 PK로  게시글 제목/내용 받아오는 부분.	
-	
 %>
 
 <%
-	
+
 	String content_id =  request.getParameter("content_id");
 	System.out.println(content_id+"번째 게시물을 수정합니다");
 
